@@ -21,15 +21,42 @@ export default function SearchBar() {
 
   return (
     <div>
-      <form onSubmit={handleSearch} style={{ marginBottom: "1rem" }}>
+      <form onSubmit={handleSearch} style={{ marginBottom: "2rem" }}>
         <input
           type="text"
           placeholder="Search educational videos..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          style={{ padding: "0.5rem", width: "70%" }}
+          style={{ 
+            padding: "0.75rem 1rem", 
+            width: "70%",
+            fontSize: "1rem",
+            border: "2px solid #ddd",
+            borderRadius: "4px 0 0 4px",
+            outline: "none",
+            transition: "border-color 0.3s"
+          }}
+          onFocus={(e) => e.target.style.borderColor = "#4285f4"}
+          onBlur={(e) => e.target.style.borderColor = "#ddd"}
         />
-        <button type="submit" style={{ padding: "0.5rem" }}>Search</button>
+        <button 
+          type="submit" 
+          style={{ 
+            padding: "0.75rem 1.5rem",
+            fontSize: "1rem",
+            backgroundColor: "#4285f4",
+            color: "white",
+            border: "none",
+            borderRadius: "0 4px 4px 0",
+            cursor: "pointer",
+            fontWeight: "500",
+            transition: "background-color 0.3s"
+          }}
+          onMouseEnter={(e) => e.target.style.backgroundColor = "#357ae8"}
+          onMouseLeave={(e) => e.target.style.backgroundColor = "#4285f4"}
+        >
+          Search
+        </button>
       </form>
 
       <VideoList results={results} loading={loading} />

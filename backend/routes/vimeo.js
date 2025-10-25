@@ -8,7 +8,7 @@ router.get("/", async (req, res) => {
   if (!query) return res.status(400).json({ error: "Missing query" });
 
   try {
-    const url = `https://api.vimeo.com/videos?query=${encodeURIComponent(query)}&per_page=5`;
+    const url = `https://api.vimeo.com/videos?query=${encodeURIComponent(query)}&per_page=50`;
 
     const response = await fetch(url, {
       headers: {
@@ -18,16 +18,22 @@ router.get("/", async (req, res) => {
 
     const data = await response.json();
 
-    const items = data.data.map((video) => ({
+    if (data.error) {
+      console.error("Vimeo API Error:", data.error);
+      return res.status(500).json({ error: data.error, items: [] });
+    }
+
+    const items = (data.data || []).map((video) => ({
       id: video.uri.split("/").pop(),
       title: video.name,
       url: video.link,
     }));
 
+    console.log(`Vimeo API returned ${items.length} results for query: "${query}"`);
     res.json({ items });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Vimeo API error" });
+    console.error("Vimeo API Error:", err);
+    res.status(500).json({ error: "Vimeo API error", items: [] });
   }
 });
 
