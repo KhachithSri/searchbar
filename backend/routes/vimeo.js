@@ -27,6 +27,8 @@ router.get("/", async (req, res) => {
       id: video.uri.split("/").pop(),
       title: video.name,
       url: video.link,
+      thumbnail: video.pictures?.sizes?.[3]?.link || video.pictures?.sizes?.[0]?.link || '',
+      description: video.description || '',
     }));
 
     console.log(`Vimeo API returned ${items.length} results for query: "${query}"`);

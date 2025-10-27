@@ -6,12 +6,14 @@ export default function SearchBar() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const handleSearch = async (e) => {
     e.preventDefault();
     if (!query.trim()) return;
 
     setLoading(true);
+    setCurrentPage(1);
     setResults([{ id: "loading", title: "Searching...", url: "#", platform: "System" }]);
 
     const videos = await searchVideos(query);
@@ -59,7 +61,12 @@ export default function SearchBar() {
         </button>
       </form>
 
-      <VideoList results={results} loading={loading} />
+      <VideoList 
+        results={results} 
+        loading={loading} 
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
     </div>
   );
 }

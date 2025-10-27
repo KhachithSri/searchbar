@@ -77,7 +77,7 @@ const EDUCATIONAL_CHANNELS = [
   "Academy of Ideas", "Philosophy Tube",
   
   // General Education & Kids Learning
-  "TED-Ed", "National Geographic", "Smithsonian Channel",
+  "TED", "TED-Ed", "TEDx Talks", "National Geographic", "Smithsonian Channel",
   "BBC Earth", "Discovery", "SciShow", "Vox", "AsapSCIENCE",
   "CGP Grey", "It's Okay To Be Smart", "Seeker",
   "Simple Learning Pro", "Learning Junction", "Kids Academy",
@@ -137,6 +137,8 @@ router.get("/", async (req, res) => {
       title: item.snippet.title,
       channelTitle: item.snippet.channelTitle,
       url: `https://www.youtube.com/watch?v=${item.id.videoId}`,
+      thumbnail: item.snippet.thumbnails?.medium?.url || item.snippet.thumbnails?.default?.url || '',
+      description: item.snippet.description || '',
     }));
 
     const filteredItems = allItems.filter((item) => 
@@ -153,6 +155,8 @@ router.get("/", async (req, res) => {
       id: item.id,
       title: `${item.title} [${item.channelTitle}]`,
       url: item.url,
+      thumbnail: item.thumbnail,
+      description: item.description,
     }));
 
     res.json({ items });

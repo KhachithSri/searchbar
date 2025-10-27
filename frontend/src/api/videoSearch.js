@@ -13,6 +13,8 @@ export async function searchVideos(query) {
         id: item.id || item.videoId || Math.random().toString(36).slice(2),
         title: item.title || item.snippet?.title || "Untitled",
         url: item.url || `https://youtube.com/watch?v=${item.videoId}`,
+        thumbnail: item.thumbnail || '',
+        description: item.description || '',
         platform: idx === 0 ? "YouTube" : "Vimeo"
       }));
     }
